@@ -1,0 +1,6 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1730064732" />
+    <testcase name="test_cskipa4" classname="test_cskipa4" file="/Users/fch/Python/PrefixGPT/CSkipA/test_cskipa4.py" lineno="5" time="0.007668972015380859" sim_time_ns="2560.001" ratio_time="333812.7971865946" />
+  </testsuite>
+</testsuites>

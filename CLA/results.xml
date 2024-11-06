@@ -1,0 +1,6 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1730066622" />
+    <testcase name="test_cla4" classname="test_cla4" file="/Users/fch/Python/PrefixGPT/CLA/test_cla4.py" lineno="5" time="0.007467031478881836" sim_time_ns="2560.001" ratio_time="342840.5260162841" />
+  </testsuite>
+</testsuites>
