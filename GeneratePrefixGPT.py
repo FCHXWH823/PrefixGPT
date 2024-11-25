@@ -264,7 +264,7 @@ if __name__=='__main__':
         partialcircuit = PrefixCircuit()
         for i in range(16):
             partialcircuit.add_input_node(i,(i,i))
-        # print(partial_prefix_circuit_prompt([kscircuit], partialcircuit,""))
+        print(partial_prefix_circuit_prompt([kscircuit], partialcircuit,""))
         error_info = ""
 
         # print(partial_prefix_circuit_prompt(partialcircuit,error_info))

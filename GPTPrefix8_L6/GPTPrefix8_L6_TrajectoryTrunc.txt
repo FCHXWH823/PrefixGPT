@@ -1,0 +1,456 @@
+The following are some prefix circuits under level bound 6 with corresponding area, where each line represents a node:
+prefix circuit:
+0: connectedNodes=(None, None), range=[0:0], left_bound=0, right_bound=0, level=1.
+1: connectedNodes=(None, None), range=[1:1], left_bound=1, right_bound=1, level=1.
+2: connectedNodes=(None, None), range=[2:2], left_bound=2, right_bound=2, level=1.
+3: connectedNodes=(None, None), range=[3:3], left_bound=3, right_bound=3, level=1.
+4: connectedNodes=(None, None), range=[4:4], left_bound=4, right_bound=4, level=1.
+5: connectedNodes=(None, None), range=[5:5], left_bound=5, right_bound=5, level=1.
+6: connectedNodes=(None, None), range=[6:6], left_bound=6, right_bound=6, level=1.
+7: connectedNodes=(None, None), range=[7:7], left_bound=7, right_bound=7, level=1.
+8: connectedNodes=(0, 1), range=[0:1], left_bound=0, right_bound=1, level=2.
+9: connectedNodes=(1, 2), range=[1:2], left_bound=1, right_bound=2, level=2.
+10: connectedNodes=(2, 3), range=[2:3], left_bound=2, right_bound=3, level=2.
+11: connectedNodes=(3, 4), range=[3:4], left_bound=3, right_bound=4, level=2.
+12: connectedNodes=(4, 5), range=[4:5], left_bound=4, right_bound=5, level=2.
+13: connectedNodes=(5, 6), range=[5:6], left_bound=5, right_bound=6, level=2.
+14: connectedNodes=(6, 7), range=[6:7], left_bound=6, right_bound=7, level=2.
+15: connectedNodes=(0, 9), range=[0:2], left_bound=0, right_bound=2, level=3.
+16: connectedNodes=(8, 10), range=[0:3], left_bound=0, right_bound=3, level=3.
+17: connectedNodes=(9, 11), range=[1:4], left_bound=1, right_bound=4, level=3.
+18: connectedNodes=(10, 12), range=[2:5], left_bound=2, right_bound=5, level=3.
+19: connectedNodes=(11, 13), range=[3:6], left_bound=3, right_bound=6, level=3.
+20: connectedNodes=(12, 14), range=[4:7], left_bound=4, right_bound=7, level=3.
+21: connectedNodes=(0, 17), range=[0:4], left_bound=0, right_bound=4, level=4.
+22: connectedNodes=(8, 18), range=[0:5], left_bound=0, right_bound=5, level=4.
+23: connectedNodes=(15, 19), range=[0:6], left_bound=0, right_bound=6, level=4.
+24: connectedNodes=(16, 20), range=[0:7], left_bound=0, right_bound=7, level=4.
+area:
+25
+prefix circuit:
+0: connectedNodes=(None, None), range=[0:0], left_bound=0, right_bound=0, level=1.
+1: connectedNodes=(None, None), range=[1:1], left_bound=1, right_bound=1, level=1.
+2: connectedNodes=(None, None), range=[2:2], left_bound=2, right_bound=2, level=1.
+3: connectedNodes=(None, None), range=[3:3], left_bound=3, right_bound=3, level=1.
+4: connectedNodes=(None, None), range=[4:4], left_bound=4, right_bound=4, level=1.
+5: connectedNodes=(None, None), range=[5:5], left_bound=5, right_bound=5, level=1.
+6: connectedNodes=(None, None), range=[6:6], left_bound=6, right_bound=6, level=1.
+7: connectedNodes=(None, None), range=[7:7], left_bound=7, right_bound=7, level=1.
+8: connectedNodes=(0, 1), range=[0:1], left_bound=0, right_bound=1, level=2.
+9: connectedNodes=(1, 2), range=[1:2], left_bound=1, right_bound=2, level=2.
+10: connectedNodes=(2, 3), range=[2:3], left_bound=2, right_bound=3, level=2.
+11: connectedNodes=(3, 4), range=[3:4], left_bound=3, right_bound=4, level=2.
+12: connectedNodes=(4, 5), range=[4:5], left_bound=4, right_bound=5, level=2.
+13: connectedNodes=(5, 6), range=[5:6], left_bound=5, right_bound=6, level=2.
+14: connectedNodes=(6, 7), range=[6:7], left_bound=6, right_bound=7, level=2.
+15: connectedNodes=(0, 9), range=[0:2], left_bound=0, right_bound=2, level=3.
+16: connectedNodes=(2, 11), range=[2:4], left_bound=2, right_bound=4, level=3.
+17: connectedNodes=(4, 13), range=[4:6], left_bound=4, right_bound=6, level=3.
+18: connectedNodes=(15, 3), range=[0:3], left_bound=0, right_bound=3, level=4.
+19: connectedNodes=(18, 4), range=[0:4], left_bound=0, right_bound=4, level=5.
+20: connectedNodes=(19, 5), range=[0:5], left_bound=0, right_bound=5, level=6.
+21: connectedNodes=(19, 13), range=[0:6], left_bound=0, right_bound=6, level=6.
+22: connectedNodes=(17, 7), range=[4:7], left_bound=4, right_bound=7, level=4.
+23: connectedNodes=(18, 22), range=[0:7], left_bound=0, right_bound=7, level=5.
+area:
+24
+prefix circuit:
+0: connectedNodes=(None, None), range=[0:0], left_bound=0, right_bound=0, level=1.
+1: connectedNodes=(None, None), range=[1:1], left_bound=1, right_bound=1, level=1.
+2: connectedNodes=(None, None), range=[2:2], left_bound=2, right_bound=2, level=1.
+3: connectedNodes=(None, None), range=[3:3], left_bound=3, right_bound=3, level=1.
+4: connectedNodes=(None, None), range=[4:4], left_bound=4, right_bound=4, level=1.
+5: connectedNodes=(None, None), range=[5:5], left_bound=5, right_bound=5, level=1.
+6: connectedNodes=(None, None), range=[6:6], left_bound=6, right_bound=6, level=1.
+7: connectedNodes=(None, None), range=[7:7], left_bound=7, right_bound=7, level=1.
+8: connectedNodes=(0, 1), range=[0:1], left_bound=0, right_bound=1, level=2.
+9: connectedNodes=(2, 3), range=[2:3], left_bound=2, right_bound=3, level=2.
+10: connectedNodes=(4, 5), range=[4:5], left_bound=4, right_bound=5, level=2.
+11: connectedNodes=(6, 7), range=[6:7], left_bound=6, right_bound=7, level=2.
+12: connectedNodes=(8, 9), range=[0:3], left_bound=0, right_bound=3, level=3.
+13: connectedNodes=(10, 11), range=[4:7], left_bound=4, right_bound=7, level=3.
+14: connectedNodes=(12, 13), range=[0:7], left_bound=0, right_bound=7, level=4.
+15: connectedNodes=(8, 2), range=[0:2], left_bound=0, right_bound=2, level=3.
+16: connectedNodes=(3, 4), range=[3:4], left_bound=3, right_bound=4, level=2.
+17: connectedNodes=(15, 16), range=[0:4], left_bound=0, right_bound=4, level=4.
+18: connectedNodes=(17, 5), range=[0:5], left_bound=0, right_bound=5, level=5.
+19: connectedNodes=(18, 6), range=[0:6], left_bound=0, right_bound=6, level=6.
+area:
+20
+prefix circuit:
+0: connectedNodes=(None, None), range=[0:0], left_bound=0, right_bound=0, level=1.
+1: connectedNodes=(None, None), range=[1:1], left_bound=1, right_bound=1, level=1.
+2: connectedNodes=(None, None), range=[2:2], left_bound=2, right_bound=2, level=1.
+3: connectedNodes=(None, None), range=[3:3], left_bound=3, right_bound=3, level=1.
+4: connectedNodes=(None, None), range=[4:4], left_bound=4, right_bound=4, level=1.
+5: connectedNodes=(None, None), range=[5:5], left_bound=5, right_bound=5, level=1.
+6: connectedNodes=(None, None), range=[6:6], left_bound=6, right_bound=6, level=1.
+7: connectedNodes=(None, None), range=[7:7], left_bound=7, right_bound=7, level=1.
+8: connectedNodes=(0, 1), range=[0:1], left_bound=0, right_bound=1, level=2.
+9: connectedNodes=(8, 2), range=[0:2], left_bound=0, right_bound=2, level=3.
+10: connectedNodes=(3, 4), range=[3:4], left_bound=3, right_bound=4, level=2.
+11: connectedNodes=(9, 3), range=[0:3], left_bound=0, right_bound=3, level=4.
+12: connectedNodes=(11, 4), range=[0:4], left_bound=0, right_bound=4, level=5.
+13: connectedNodes=(10, 5), range=[3:5], left_bound=3, right_bound=5, level=3.
+14: connectedNodes=(9, 13), range=[0:5], left_bound=0, right_bound=5, level=4.
+15: connectedNodes=(14, 6), range=[0:6], left_bound=0, right_bound=6, level=5.
+16: connectedNodes=(15, 7), range=[0:7], left_bound=0, right_bound=7, level=6.
+area:
+17
+prefix circuit:
+0: connectedNodes=(None, None), range=[0:0], left_bound=0, right_bound=0, level=1.
+1: connectedNodes=(None, None), range=[1:1], left_bound=1, right_bound=1, level=1.
+2: connectedNodes=(None, None), range=[2:2], left_bound=2, right_bound=2, level=1.
+3: connectedNodes=(None, None), range=[3:3], left_bound=3, right_bound=3, level=1.
+4: connectedNodes=(None, None), range=[4:4], left_bound=4, right_bound=4, level=1.
+5: connectedNodes=(None, None), range=[5:5], left_bound=5, right_bound=5, level=1.
+6: connectedNodes=(None, None), range=[6:6], left_bound=6, right_bound=6, level=1.
+7: connectedNodes=(None, None), range=[7:7], left_bound=7, right_bound=7, level=1.
+8: connectedNodes=(0, 1), range=[0:1], left_bound=0, right_bound=1, level=2.
+9: connectedNodes=(2, 3), range=[2:3], left_bound=2, right_bound=3, level=2.
+10: connectedNodes=(4, 5), range=[4:5], left_bound=4, right_bound=5, level=2.
+11: connectedNodes=(6, 7), range=[6:7], left_bound=6, right_bound=7, level=2.
+12: connectedNodes=(8, 9), range=[0:3], left_bound=0, right_bound=3, level=3.
+13: connectedNodes=(10, 11), range=[4:7], left_bound=4, right_bound=7, level=3.
+14: connectedNodes=(12, 13), range=[0:7], left_bound=0, right_bound=7, level=4.
+15: connectedNodes=(8, 2), range=[0:2], left_bound=0, right_bound=2, level=3.
+16: connectedNodes=(12, 4), range=[0:4], left_bound=0, right_bound=4, level=4.
+17: connectedNodes=(16, 5), range=[0:5], left_bound=0, right_bound=5, level=5.
+18: connectedNodes=(17, 6), range=[0:6], left_bound=0, right_bound=6, level=6.
+area:
+19
+prefix circuit:
+0: connectedNodes=(None, None), range=[0:0], left_bound=0, right_bound=0, level=1.
+1: connectedNodes=(None, None), range=[1:1], left_bound=1, right_bound=1, level=1.
+2: connectedNodes=(None, None), range=[2:2], left_bound=2, right_bound=2, level=1.
+3: connectedNodes=(None, None), range=[3:3], left_bound=3, right_bound=3, level=1.
+4: connectedNodes=(None, None), range=[4:4], left_bound=4, right_bound=4, level=1.
+5: connectedNodes=(None, None), range=[5:5], left_bound=5, right_bound=5, level=1.
+6: connectedNodes=(None, None), range=[6:6], left_bound=6, right_bound=6, level=1.
+7: connectedNodes=(None, None), range=[7:7], left_bound=7, right_bound=7, level=1.
+8: connectedNodes=(0, 1), range=[0:1], left_bound=0, right_bound=1, level=2.
+9: connectedNodes=(2, 3), range=[2:3], left_bound=2, right_bound=3, level=2.
+10: connectedNodes=(8, 9), range=[0:3], left_bound=0, right_bound=3, level=3.
+11: connectedNodes=(4, 5), range=[4:5], left_bound=4, right_bound=5, level=2.
+12: connectedNodes=(6, 7), range=[6:7], left_bound=6, right_bound=7, level=2.
+13: connectedNodes=(8, 2), range=[0:2], left_bound=0, right_bound=2, level=3.
+14: connectedNodes=(10, 4), range=[0:4], left_bound=0, right_bound=4, level=4.
+15: connectedNodes=(14, 5), range=[0:5], left_bound=0, right_bound=5, level=5.
+16: connectedNodes=(15, 6), range=[0:6], left_bound=0, right_bound=6, level=6.
+17: connectedNodes=(15, 12), range=[0:7], left_bound=0, right_bound=7, level=6.
+area:
+18
+prefix circuit:
+0: connectedNodes=(None, None), range=[0:0], left_bound=0, right_bound=0, level=1.
+1: connectedNodes=(None, None), range=[1:1], left_bound=1, right_bound=1, level=1.
+2: connectedNodes=(None, None), range=[2:2], left_bound=2, right_bound=2, level=1.
+3: connectedNodes=(None, None), range=[3:3], left_bound=3, right_bound=3, level=1.
+4: connectedNodes=(None, None), range=[4:4], left_bound=4, right_bound=4, level=1.
+5: connectedNodes=(None, None), range=[5:5], left_bound=5, right_bound=5, level=1.
+6: connectedNodes=(None, None), range=[6:6], left_bound=6, right_bound=6, level=1.
+7: connectedNodes=(None, None), range=[7:7], left_bound=7, right_bound=7, level=1.
+8: connectedNodes=(0, 1), range=[0:1], left_bound=0, right_bound=1, level=2.
+9: connectedNodes=(8, 2), range=[0:2], left_bound=0, right_bound=2, level=3.
+10: connectedNodes=(3, 4), range=[3:4], left_bound=3, right_bound=4, level=2.
+11: connectedNodes=(9, 3), range=[0:3], left_bound=0, right_bound=3, level=4.
+12: connectedNodes=(11, 4), range=[0:4], left_bound=0, right_bound=4, level=5.
+13: connectedNodes=(10, 5), range=[3:5], left_bound=3, right_bound=5, level=3.
+14: connectedNodes=(9, 13), range=[0:5], left_bound=0, right_bound=5, level=4.
+15: connectedNodes=(14, 6), range=[0:6], left_bound=0, right_bound=6, level=5.
+16: connectedNodes=(15, 7), range=[0:7], left_bound=0, right_bound=7, level=6.
+area:
+17
+prefix circuit:
+0: connectedNodes=(None, None), range=[0:0], left_bound=0, right_bound=0, level=1.
+1: connectedNodes=(None, None), range=[1:1], left_bound=1, right_bound=1, level=1.
+2: connectedNodes=(None, None), range=[2:2], left_bound=2, right_bound=2, level=1.
+3: connectedNodes=(None, None), range=[3:3], left_bound=3, right_bound=3, level=1.
+4: connectedNodes=(None, None), range=[4:4], left_bound=4, right_bound=4, level=1.
+5: connectedNodes=(None, None), range=[5:5], left_bound=5, right_bound=5, level=1.
+6: connectedNodes=(None, None), range=[6:6], left_bound=6, right_bound=6, level=1.
+7: connectedNodes=(None, None), range=[7:7], left_bound=7, right_bound=7, level=1.
+8: connectedNodes=(0, 1), range=[0:1], left_bound=0, right_bound=1, level=2.
+9: connectedNodes=(2, 3), range=[2:3], left_bound=2, right_bound=3, level=2.
+10: connectedNodes=(4, 5), range=[4:5], left_bound=4, right_bound=5, level=2.
+11: connectedNodes=(6, 7), range=[6:7], left_bound=6, right_bound=7, level=2.
+12: connectedNodes=(8, 9), range=[0:3], left_bound=0, right_bound=3, level=3.
+13: connectedNodes=(10, 11), range=[4:7], left_bound=4, right_bound=7, level=3.
+14: connectedNodes=(12, 13), range=[0:7], left_bound=0, right_bound=7, level=4.
+15: connectedNodes=(8, 2), range=[0:2], left_bound=0, right_bound=2, level=3.
+16: connectedNodes=(12, 4), range=[0:4], left_bound=0, right_bound=4, level=4.
+17: connectedNodes=(12, 10), range=[0:5], left_bound=0, right_bound=5, level=4.
+18: connectedNodes=(5, 6), range=[5:6], left_bound=5, right_bound=6, level=2.
+19: connectedNodes=(16, 18), range=[0:6], left_bound=0, right_bound=6, level=5.
+area:
+20
+prefix circuit:
+0: connectedNodes=(None, None), range=[0:0], left_bound=0, right_bound=0, level=1.
+1: connectedNodes=(None, None), range=[1:1], left_bound=1, right_bound=1, level=1.
+2: connectedNodes=(None, None), range=[2:2], left_bound=2, right_bound=2, level=1.
+3: connectedNodes=(None, None), range=[3:3], left_bound=3, right_bound=3, level=1.
+4: connectedNodes=(None, None), range=[4:4], left_bound=4, right_bound=4, level=1.
+5: connectedNodes=(None, None), range=[5:5], left_bound=5, right_bound=5, level=1.
+6: connectedNodes=(None, None), range=[6:6], left_bound=6, right_bound=6, level=1.
+7: connectedNodes=(None, None), range=[7:7], left_bound=7, right_bound=7, level=1.
+8: connectedNodes=(0, 1), range=[0:1], left_bound=0, right_bound=1, level=2.
+9: connectedNodes=(2, 3), range=[2:3], left_bound=2, right_bound=3, level=2.
+10: connectedNodes=(8, 9), range=[0:3], left_bound=0, right_bound=3, level=3.
+11: connectedNodes=(4, 5), range=[4:5], left_bound=4, right_bound=5, level=2.
+12: connectedNodes=(6, 7), range=[6:7], left_bound=6, right_bound=7, level=2.
+13: connectedNodes=(10, 11), range=[0:5], left_bound=0, right_bound=5, level=4.
+14: connectedNodes=(13, 12), range=[0:7], left_bound=0, right_bound=7, level=5.
+15: connectedNodes=(8, 2), range=[0:2], left_bound=0, right_bound=2, level=3.
+16: connectedNodes=(10, 4), range=[0:4], left_bound=0, right_bound=4, level=4.
+17: connectedNodes=(13, 6), range=[0:6], left_bound=0, right_bound=6, level=5.
+area:
+18
+prefix circuit:
+0: connectedNodes=(None, None), range=[0:0], left_bound=0, right_bound=0, level=1.
+1: connectedNodes=(None, None), range=[1:1], left_bound=1, right_bound=1, level=1.
+2: connectedNodes=(None, None), range=[2:2], left_bound=2, right_bound=2, level=1.
+3: connectedNodes=(None, None), range=[3:3], left_bound=3, right_bound=3, level=1.
+4: connectedNodes=(None, None), range=[4:4], left_bound=4, right_bound=4, level=1.
+5: connectedNodes=(None, None), range=[5:5], left_bound=5, right_bound=5, level=1.
+6: connectedNodes=(None, None), range=[6:6], left_bound=6, right_bound=6, level=1.
+7: connectedNodes=(None, None), range=[7:7], left_bound=7, right_bound=7, level=1.
+8: connectedNodes=(0, 1), range=[0:1], left_bound=0, right_bound=1, level=2.
+9: connectedNodes=(2, 3), range=[2:3], left_bound=2, right_bound=3, level=2.
+10: connectedNodes=(4, 5), range=[4:5], left_bound=4, right_bound=5, level=2.
+11: connectedNodes=(6, 7), range=[6:7], left_bound=6, right_bound=7, level=2.
+12: connectedNodes=(8, 9), range=[0:3], left_bound=0, right_bound=3, level=3.
+13: connectedNodes=(10, 11), range=[4:7], left_bound=4, right_bound=7, level=3.
+14: connectedNodes=(12, 13), range=[0:7], left_bound=0, right_bound=7, level=4.
+15: connectedNodes=(8, 2), range=[0:2], left_bound=0, right_bound=2, level=3.
+16: connectedNodes=(12, 4), range=[0:4], left_bound=0, right_bound=4, level=4.
+17: connectedNodes=(16, 5), range=[0:5], left_bound=0, right_bound=5, level=5.
+18: connectedNodes=(17, 6), range=[0:6], left_bound=0, right_bound=6, level=6.
+area:
+19
+prefix circuit:
+0: connectedNodes=(None, None), range=[0:0], left_bound=0, right_bound=0, level=1.
+1: connectedNodes=(None, None), range=[1:1], left_bound=1, right_bound=1, level=1.
+2: connectedNodes=(None, None), range=[2:2], left_bound=2, right_bound=2, level=1.
+3: connectedNodes=(None, None), range=[3:3], left_bound=3, right_bound=3, level=1.
+4: connectedNodes=(None, None), range=[4:4], left_bound=4, right_bound=4, level=1.
+5: connectedNodes=(None, None), range=[5:5], left_bound=5, right_bound=5, level=1.
+6: connectedNodes=(None, None), range=[6:6], left_bound=6, right_bound=6, level=1.
+7: connectedNodes=(None, None), range=[7:7], left_bound=7, right_bound=7, level=1.
+8: connectedNodes=(0, 1), range=[0:1], left_bound=0, right_bound=1, level=2.
+9: connectedNodes=(2, 3), range=[2:3], left_bound=2, right_bound=3, level=2.
+10: connectedNodes=(4, 5), range=[4:5], left_bound=4, right_bound=5, level=2.
+11: connectedNodes=(6, 7), range=[6:7], left_bound=6, right_bound=7, level=2.
+12: connectedNodes=(8, 2), range=[0:2], left_bound=0, right_bound=2, level=3.
+13: connectedNodes=(8, 9), range=[0:3], left_bound=0, right_bound=3, level=3.
+14: connectedNodes=(13, 4), range=[0:4], left_bound=0, right_bound=4, level=4.
+15: connectedNodes=(14, 5), range=[0:5], left_bound=0, right_bound=5, level=5.
+16: connectedNodes=(15, 6), range=[0:6], left_bound=0, right_bound=6, level=6.
+17: connectedNodes=(15, 11), range=[0:7], left_bound=0, right_bound=7, level=6.
+area:
+18
+prefix circuit:
+0: connectedNodes=(None, None), range=[0:0], left_bound=0, right_bound=0, level=1.
+1: connectedNodes=(None, None), range=[1:1], left_bound=1, right_bound=1, level=1.
+2: connectedNodes=(None, None), range=[2:2], left_bound=2, right_bound=2, level=1.
+3: connectedNodes=(None, None), range=[3:3], left_bound=3, right_bound=3, level=1.
+4: connectedNodes=(None, None), range=[4:4], left_bound=4, right_bound=4, level=1.
+5: connectedNodes=(None, None), range=[5:5], left_bound=5, right_bound=5, level=1.
+6: connectedNodes=(None, None), range=[6:6], left_bound=6, right_bound=6, level=1.
+7: connectedNodes=(None, None), range=[7:7], left_bound=7, right_bound=7, level=1.
+8: connectedNodes=(0, 1), range=[0:1], left_bound=0, right_bound=1, level=2.
+9: connectedNodes=(8, 2), range=[0:2], left_bound=0, right_bound=2, level=3.
+10: connectedNodes=(3, 4), range=[3:4], left_bound=3, right_bound=4, level=2.
+11: connectedNodes=(9, 10), range=[0:4], left_bound=0, right_bound=4, level=4.
+12: connectedNodes=(5, 6), range=[5:6], left_bound=5, right_bound=6, level=2.
+13: connectedNodes=(11, 12), range=[0:6], left_bound=0, right_bound=6, level=5.
+14: connectedNodes=(13, 7), range=[0:7], left_bound=0, right_bound=7, level=6.
+15: connectedNodes=(9, 3), range=[0:3], left_bound=0, right_bound=3, level=4.
+16: connectedNodes=(11, 5), range=[0:5], left_bound=0, right_bound=5, level=5.
+area:
+17
+prefix circuit:
+0: connectedNodes=(None, None), range=[0:0], left_bound=0, right_bound=0, level=1.
+1: connectedNodes=(None, None), range=[1:1], left_bound=1, right_bound=1, level=1.
+2: connectedNodes=(None, None), range=[2:2], left_bound=2, right_bound=2, level=1.
+3: connectedNodes=(None, None), range=[3:3], left_bound=3, right_bound=3, level=1.
+4: connectedNodes=(None, None), range=[4:4], left_bound=4, right_bound=4, level=1.
+5: connectedNodes=(None, None), range=[5:5], left_bound=5, right_bound=5, level=1.
+6: connectedNodes=(None, None), range=[6:6], left_bound=6, right_bound=6, level=1.
+7: connectedNodes=(None, None), range=[7:7], left_bound=7, right_bound=7, level=1.
+8: connectedNodes=(0, 1), range=[0:1], left_bound=0, right_bound=1, level=2.
+9: connectedNodes=(8, 2), range=[0:2], left_bound=0, right_bound=2, level=3.
+10: connectedNodes=(9, 3), range=[0:3], left_bound=0, right_bound=3, level=4.
+11: connectedNodes=(10, 4), range=[0:4], left_bound=0, right_bound=4, level=5.
+12: connectedNodes=(11, 5), range=[0:5], left_bound=0, right_bound=5, level=6.
+13: connectedNodes=(5, 6), range=[5:6], left_bound=5, right_bound=6, level=2.
+14: connectedNodes=(4, 13), range=[4:6], left_bound=4, right_bound=6, level=3.
+15: connectedNodes=(10, 14), range=[0:6], left_bound=0, right_bound=6, level=5.
+16: connectedNodes=(15, 7), range=[0:7], left_bound=0, right_bound=7, level=6.
+area:
+17
+prefix circuit:
+0: connectedNodes=(None, None), range=[0:0], left_bound=0, right_bound=0, level=1.
+1: connectedNodes=(None, None), range=[1:1], left_bound=1, right_bound=1, level=1.
+2: connectedNodes=(None, None), range=[2:2], left_bound=2, right_bound=2, level=1.
+3: connectedNodes=(None, None), range=[3:3], left_bound=3, right_bound=3, level=1.
+4: connectedNodes=(None, None), range=[4:4], left_bound=4, right_bound=4, level=1.
+5: connectedNodes=(None, None), range=[5:5], left_bound=5, right_bound=5, level=1.
+6: connectedNodes=(None, None), range=[6:6], left_bound=6, right_bound=6, level=1.
+7: connectedNodes=(None, None), range=[7:7], left_bound=7, right_bound=7, level=1.
+8: connectedNodes=(0, 1), range=[0:1], left_bound=0, right_bound=1, level=2.
+9: connectedNodes=(8, 2), range=[0:2], left_bound=0, right_bound=2, level=3.
+10: connectedNodes=(3, 4), range=[3:4], left_bound=3, right_bound=4, level=2.
+11: connectedNodes=(9, 10), range=[0:4], left_bound=0, right_bound=4, level=4.
+12: connectedNodes=(5, 6), range=[5:6], left_bound=5, right_bound=6, level=2.
+13: connectedNodes=(11, 12), range=[0:6], left_bound=0, right_bound=6, level=5.
+14: connectedNodes=(13, 7), range=[0:7], left_bound=0, right_bound=7, level=6.
+15: connectedNodes=(9, 3), range=[0:3], left_bound=0, right_bound=3, level=4.
+16: connectedNodes=(11, 5), range=[0:5], left_bound=0, right_bound=5, level=5.
+area:
+17
+prefix circuit:
+0: connectedNodes=(None, None), range=[0:0], left_bound=0, right_bound=0, level=1.
+1: connectedNodes=(None, None), range=[1:1], left_bound=1, right_bound=1, level=1.
+2: connectedNodes=(None, None), range=[2:2], left_bound=2, right_bound=2, level=1.
+3: connectedNodes=(None, None), range=[3:3], left_bound=3, right_bound=3, level=1.
+4: connectedNodes=(None, None), range=[4:4], left_bound=4, right_bound=4, level=1.
+5: connectedNodes=(None, None), range=[5:5], left_bound=5, right_bound=5, level=1.
+6: connectedNodes=(None, None), range=[6:6], left_bound=6, right_bound=6, level=1.
+7: connectedNodes=(None, None), range=[7:7], left_bound=7, right_bound=7, level=1.
+8: connectedNodes=(0, 1), range=[0:1], left_bound=0, right_bound=1, level=2.
+9: connectedNodes=(8, 2), range=[0:2], left_bound=0, right_bound=2, level=3.
+10: connectedNodes=(4, 5), range=[4:5], left_bound=4, right_bound=5, level=2.
+11: connectedNodes=(6, 7), range=[6:7], left_bound=6, right_bound=7, level=2.
+12: connectedNodes=(9, 3), range=[0:3], left_bound=0, right_bound=3, level=4.
+13: connectedNodes=(12, 10), range=[0:5], left_bound=0, right_bound=5, level=5.
+14: connectedNodes=(13, 6), range=[0:6], left_bound=0, right_bound=6, level=6.
+15: connectedNodes=(12, 4), range=[0:4], left_bound=0, right_bound=4, level=5.
+16: connectedNodes=(5, 11), range=[5:7], left_bound=5, right_bound=7, level=3.
+17: connectedNodes=(15, 16), range=[0:7], left_bound=0, right_bound=7, level=6.
+area:
+18
+prefix circuit:
+0: connectedNodes=(None, None), range=[0:0], left_bound=0, right_bound=0, level=1.
+1: connectedNodes=(None, None), range=[1:1], left_bound=1, right_bound=1, level=1.
+2: connectedNodes=(None, None), range=[2:2], left_bound=2, right_bound=2, level=1.
+3: connectedNodes=(None, None), range=[3:3], left_bound=3, right_bound=3, level=1.
+4: connectedNodes=(None, None), range=[4:4], left_bound=4, right_bound=4, level=1.
+5: connectedNodes=(None, None), range=[5:5], left_bound=5, right_bound=5, level=1.
+6: connectedNodes=(None, None), range=[6:6], left_bound=6, right_bound=6, level=1.
+7: connectedNodes=(None, None), range=[7:7], left_bound=7, right_bound=7, level=1.
+8: connectedNodes=(0, 1), range=[0:1], left_bound=0, right_bound=1, level=2.
+9: connectedNodes=(8, 2), range=[0:2], left_bound=0, right_bound=2, level=3.
+10: connectedNodes=(9, 3), range=[0:3], left_bound=0, right_bound=3, level=4.
+11: connectedNodes=(10, 4), range=[0:4], left_bound=0, right_bound=4, level=5.
+12: connectedNodes=(11, 5), range=[0:5], left_bound=0, right_bound=5, level=6.
+13: connectedNodes=(5, 6), range=[5:6], left_bound=5, right_bound=6, level=2.
+14: connectedNodes=(4, 13), range=[4:6], left_bound=4, right_bound=6, level=3.
+15: connectedNodes=(10, 14), range=[0:6], left_bound=0, right_bound=6, level=5.
+16: connectedNodes=(15, 7), range=[0:7], left_bound=0, right_bound=7, level=6.
+area:
+17
+prefix circuit:
+0: connectedNodes=(None, None), range=[0:0], left_bound=0, right_bound=0, level=1.
+1: connectedNodes=(None, None), range=[1:1], left_bound=1, right_bound=1, level=1.
+2: connectedNodes=(None, None), range=[2:2], left_bound=2, right_bound=2, level=1.
+3: connectedNodes=(None, None), range=[3:3], left_bound=3, right_bound=3, level=1.
+4: connectedNodes=(None, None), range=[4:4], left_bound=4, right_bound=4, level=1.
+5: connectedNodes=(None, None), range=[5:5], left_bound=5, right_bound=5, level=1.
+6: connectedNodes=(None, None), range=[6:6], left_bound=6, right_bound=6, level=1.
+7: connectedNodes=(None, None), range=[7:7], left_bound=7, right_bound=7, level=1.
+8: connectedNodes=(0, 1), range=[0:1], left_bound=0, right_bound=1, level=2.
+9: connectedNodes=(8, 2), range=[0:2], left_bound=0, right_bound=2, level=3.
+10: connectedNodes=(9, 3), range=[0:3], left_bound=0, right_bound=3, level=4.
+11: connectedNodes=(10, 4), range=[0:4], left_bound=0, right_bound=4, level=5.
+12: connectedNodes=(11, 5), range=[0:5], left_bound=0, right_bound=5, level=6.
+13: connectedNodes=(5, 6), range=[5:6], left_bound=5, right_bound=6, level=2.
+14: connectedNodes=(4, 13), range=[4:6], left_bound=4, right_bound=6, level=3.
+15: connectedNodes=(10, 14), range=[0:6], left_bound=0, right_bound=6, level=5.
+16: connectedNodes=(15, 7), range=[0:7], left_bound=0, right_bound=7, level=6.
+area:
+17
+prefix circuit:
+0: connectedNodes=(None, None), range=[0:0], left_bound=0, right_bound=0, level=1.
+1: connectedNodes=(None, None), range=[1:1], left_bound=1, right_bound=1, level=1.
+2: connectedNodes=(None, None), range=[2:2], left_bound=2, right_bound=2, level=1.
+3: connectedNodes=(None, None), range=[3:3], left_bound=3, right_bound=3, level=1.
+4: connectedNodes=(None, None), range=[4:4], left_bound=4, right_bound=4, level=1.
+5: connectedNodes=(None, None), range=[5:5], left_bound=5, right_bound=5, level=1.
+6: connectedNodes=(None, None), range=[6:6], left_bound=6, right_bound=6, level=1.
+7: connectedNodes=(None, None), range=[7:7], left_bound=7, right_bound=7, level=1.
+8: connectedNodes=(0, 1), range=[0:1], left_bound=0, right_bound=1, level=2.
+9: connectedNodes=(8, 2), range=[0:2], left_bound=0, right_bound=2, level=3.
+10: connectedNodes=(9, 3), range=[0:3], left_bound=0, right_bound=3, level=4.
+11: connectedNodes=(4, 5), range=[4:5], left_bound=4, right_bound=5, level=2.
+12: connectedNodes=(11, 6), range=[4:6], left_bound=4, right_bound=6, level=3.
+13: connectedNodes=(10, 12), range=[0:6], left_bound=0, right_bound=6, level=5.
+14: connectedNodes=(13, 7), range=[0:7], left_bound=0, right_bound=7, level=6.
+15: connectedNodes=(10, 4), range=[0:4], left_bound=0, right_bound=4, level=5.
+16: connectedNodes=(15, 5), range=[0:5], left_bound=0, right_bound=5, level=6.
+area:
+17
+prefix circuit:
+0: connectedNodes=(None, None), range=[0:0], left_bound=0, right_bound=0, level=1.
+1: connectedNodes=(None, None), range=[1:1], left_bound=1, right_bound=1, level=1.
+2: connectedNodes=(None, None), range=[2:2], left_bound=2, right_bound=2, level=1.
+3: connectedNodes=(None, None), range=[3:3], left_bound=3, right_bound=3, level=1.
+4: connectedNodes=(None, None), range=[4:4], left_bound=4, right_bound=4, level=1.
+5: connectedNodes=(None, None), range=[5:5], left_bound=5, right_bound=5, level=1.
+6: connectedNodes=(None, None), range=[6:6], left_bound=6, right_bound=6, level=1.
+7: connectedNodes=(None, None), range=[7:7], left_bound=7, right_bound=7, level=1.
+8: connectedNodes=(0, 1), range=[0:1], left_bound=0, right_bound=1, level=2.
+9: connectedNodes=(8, 2), range=[0:2], left_bound=0, right_bound=2, level=3.
+10: connectedNodes=(5, 6), range=[5:6], left_bound=5, right_bound=6, level=2.
+11: connectedNodes=(3, 4), range=[3:4], left_bound=3, right_bound=4, level=2.
+12: connectedNodes=(9, 11), range=[0:4], left_bound=0, right_bound=4, level=4.
+13: connectedNodes=(10, 7), range=[5:7], left_bound=5, right_bound=7, level=3.
+14: connectedNodes=(11, 13), range=[3:7], left_bound=3, right_bound=7, level=4.
+15: connectedNodes=(9, 14), range=[0:7], left_bound=0, right_bound=7, level=5.
+16: connectedNodes=(9, 3), range=[0:3], left_bound=0, right_bound=3, level=4.
+17: connectedNodes=(12, 5), range=[0:5], left_bound=0, right_bound=5, level=5.
+18: connectedNodes=(17, 6), range=[0:6], left_bound=0, right_bound=6, level=6.
+area:
+19
+prefix circuit:
+0: connectedNodes=(None, None), range=[0:0], left_bound=0, right_bound=0, level=1.
+1: connectedNodes=(None, None), range=[1:1], left_bound=1, right_bound=1, level=1.
+2: connectedNodes=(None, None), range=[2:2], left_bound=2, right_bound=2, level=1.
+3: connectedNodes=(None, None), range=[3:3], left_bound=3, right_bound=3, level=1.
+4: connectedNodes=(None, None), range=[4:4], left_bound=4, right_bound=4, level=1.
+5: connectedNodes=(None, None), range=[5:5], left_bound=5, right_bound=5, level=1.
+6: connectedNodes=(None, None), range=[6:6], left_bound=6, right_bound=6, level=1.
+7: connectedNodes=(None, None), range=[7:7], left_bound=7, right_bound=7, level=1.
+8: connectedNodes=(0, 1), range=[0:1], left_bound=0, right_bound=1, level=2.
+9: connectedNodes=(8, 2), range=[0:2], left_bound=0, right_bound=2, level=3.
+10: connectedNodes=(9, 3), range=[0:3], left_bound=0, right_bound=3, level=4.
+11: connectedNodes=(4, 5), range=[4:5], left_bound=4, right_bound=5, level=2.
+12: connectedNodes=(3, 11), range=[3:5], left_bound=3, right_bound=5, level=3.
+13: connectedNodes=(9, 12), range=[0:5], left_bound=0, right_bound=5, level=4.
+14: connectedNodes=(13, 6), range=[0:6], left_bound=0, right_bound=6, level=5.
+15: connectedNodes=(14, 7), range=[0:7], left_bound=0, right_bound=7, level=6.
+16: connectedNodes=(3, 4), range=[3:4], left_bound=3, right_bound=4, level=2.
+17: connectedNodes=(9, 16), range=[0:4], left_bound=0, right_bound=4, level=4.
+area:
+18
+prefix circuit:
+0: connectedNodes=(None, None), range=[0:0], left_bound=0, right_bound=0, level=1.
+1: connectedNodes=(None, None), range=[1:1], left_bound=1, right_bound=1, level=1.
+2: connectedNodes=(None, None), range=[2:2], left_bound=2, right_bound=2, level=1.
+3: connectedNodes=(None, None), range=[3:3], left_bound=3, right_bound=3, level=1.
+4: connectedNodes=(None, None), range=[4:4], left_bound=4, right_bound=4, level=1.
+5: connectedNodes=(None, None), range=[5:5], left_bound=5, right_bound=5, level=1.
+6: connectedNodes=(None, None), range=[6:6], left_bound=6, right_bound=6, level=1.
+7: connectedNodes=(None, None), range=[7:7], left_bound=7, right_bound=7, level=1.
+8: connectedNodes=(0, 1), range=[0:1], left_bound=0, right_bound=1, level=2.
+9: connectedNodes=(2, 3), range=[2:3], left_bound=2, right_bound=3, level=2.
+10: connectedNodes=(4, 5), range=[4:5], left_bound=4, right_bound=5, level=2.
+11: connectedNodes=(6, 7), range=[6:7], left_bound=6, right_bound=7, level=2.
+12: connectedNodes=(8, 9), range=[0:3], left_bound=0, right_bound=3, level=3.
+13: connectedNodes=(10, 11), range=[4:7], left_bound=4, right_bound=7, level=3.
+14: connectedNodes=(12, 13), range=[0:7], left_bound=0, right_bound=7, level=4.
+15: connectedNodes=(8, 2), range=[0:2], left_bound=0, right_bound=2, level=3.
+16: connectedNodes=(3, 4), range=[3:4], left_bound=3, right_bound=4, level=2.
+17: connectedNodes=(15, 16), range=[0:4], left_bound=0, right_bound=4, level=4.
+18: connectedNodes=(17, 5), range=[0:5], left_bound=0, right_bound=5, level=5.
+19: connectedNodes=(18, 6), range=[0:6], left_bound=0, right_bound=6, level=6.
+area:
+20

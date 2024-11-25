@@ -7,6 +7,7 @@ import math
 import re
 import random
 import nxpd
+import numpy as np
 
 class PrefixCircuit:
     def __init__(self):
@@ -24,7 +25,7 @@ class PrefixCircuit:
             bit_range (tuple): Tuple containing (start_index, end_index).
         """
         node_name = f"Node {index}"
-        self.graph.add_node(node_name, index=index, range=bit_range, type='input')
+        self.graph.add_node(node_name, index=index, range=bit_range, type='input', level=1)
 
     def add_prefix_node(self, left_node_index, right_node_index, index):
         """
@@ -55,8 +56,13 @@ class PrefixCircuit:
         # Compute the combined range
         combined_range = (left_range[0], right_range[1])
 
+        # Compute the level
+        level_left = self.graph.nodes[left_node_name]['level']
+        level_right = self.graph.nodes[right_node_name]['level']
+        level_current = max(level_left,level_right)+1
+
         # Add the new prefix node
-        self.graph.add_node(node_name, index=index, range=combined_range, type='prefix')
+        self.graph.add_node(node_name, index=index, range=combined_range, type='prefix',level = level_current)
         # Add edges from the input nodes to the new prefix node
         self.graph.add_edge(left_node_name, node_name)
         self.graph.add_edge(right_node_name, node_name)
@@ -93,7 +99,7 @@ class PrefixCircuit:
         # Initialize levels for input nodes
         for node, data in self.graph.nodes(data=True):
             if data['type'] == 'input':
-                levels[node] = 0
+                levels[node] = 1 # change initial level to 1
 
         # Assign levels to prefix nodes
         nodes_to_process = [node for node in self.graph.nodes if node not in levels]
@@ -262,7 +268,7 @@ class PrefixCircuit:
             range_str = f"[{bit_range[0]}:{bit_range[1]}]"
 
             # Prepare the output line
-            line = f"{index}: connectedNodes={connected_nodes}, range={range_str}, left_bound={bit_range[0]}, right_bound={bit_range[1]}."
+            line = f"{index}: connectedNodes={connected_nodes}, range={range_str}, left_bound={bit_range[0]}, right_bound={bit_range[1]}, level={data['level']}."
             # print(line)
             output_lines.append(line)
 
@@ -305,10 +311,12 @@ class PrefixCircuit:
             node_name = f"Node {index}"
             if left_node is None and right_node is None:
                 # This is an input node
-                self.graph.add_node(node_name, index=index, range=bit_range, type='input')
+                self.add_input_node(index,bit_range)
+                # self.graph.add_node(node_name, index=index, range=bit_range, type='input')
             else:
                 # This is a prefix node
-                self.graph.add_node(node_name, index=index, range=bit_range, type='prefix')
+                self.add_prefix_node(left_node,right_node,index)
+                # self.graph.add_node(node_name, index=index, range=bit_range, type='prefix')
                 # Add edges from each connected node, if they exist
                 if left_node is not None:
                     self.graph.add_edge(f"Node {left_node}", node_name)
@@ -405,7 +413,7 @@ endmodule
 
         for level, nodes in sorted(level_nodes.items()):
             # Skip the initial input level
-            if level == 0:
+            if level == 1:
                 continue
 
             # Define wires for generate and propagate signals for this level
@@ -710,9 +718,204 @@ endmodule
 
         return sorted_circuits
 
+    @staticmethod
+    def parse_circuits_from_file(filename, prune_node_flag=True):
+        """
+        Parses the text file to create multiple PrefixCircuit instances.
+
+        Parameters:
+            filename (str): Path to the file containing the prefix circuit data.
+
+        Returns:
+            list of PrefixCircuit: List of created PrefixCircuit instances.
+        """
+        circuits = []
+        with open(filename, 'r') as file:
+            circuit_text = ""
+            read_state = 0
+            for line in file:
+                if "area:" in line:
+                    read_state = 0
+                    pc = PrefixCircuit()
+                    pc.construct_circuit_from_info_string(circuit_text)
+                    if prune_node_flag:
+                        pc.remove_useless_nodes()
+                    circuits.append(pc)
+                    circuit_text = ""
+                if read_state:
+                    circuit_text += line
+                if "prefix circuit:" in line:
+                    read_state = 1
+        return circuits
     
+    @staticmethod
+    def plot_pareto_front(circuits, filename):
+        """
+        Plots the Pareto front of circuits based on area and delay.
+
+        Parameters:
+            circuits (list of PrefixCircuit): List of PrefixCircuit instances.
+        """
+        sorted_circuits = PrefixCircuit.non_dominated_sort(circuits)
+        areas = [circuit.compute_num_nodes() for circuit in sorted_circuits]
+        delays = [circuit.compute_overall_delay() for circuit in sorted_circuits]
+
+        plt.figure(figsize=(10, 6))
+        plt.scatter(areas, delays, color="gray", label="All Circuits")
+        # plt.scatter(areas[:len(circuits)], delays[:len(circuits)], color="red", label="Pareto-Optimal Circuits")
+        plt.xlabel("Area")
+        plt.ylabel("Delay")
+        plt.legend()
+        plt.grid(True)
+        plt.title("Pareto Front for Prefix Circuits")
+        plt.savefig(f"{filename}.png")
+
+    @staticmethod
+    def sort_circuits_by_area(circuits):
+        """
+        Sorts a list of PrefixCircuit instances by area in descending order.
+
+        Parameters:
+            circuits (list of PrefixCircuit): List of circuits to be sorted.
+
+        Returns:
+            list of PrefixCircuit: A new list of circuits sorted by area in descending order.
+        """
+        # Sort circuits by area in descending order
+        sorted_circuits = sorted(circuits, key=lambda circuit: circuit.compute_num_nodes(), reverse=True)
+        return sorted_circuits
+    
+    def remove_useless_nodes(self):
+        """
+        Removes prefix nodes that are not connected (either directly or indirectly) to any output node.
+        """
+        # Find all prefix nodes in the circuit
+        prefix_nodes = [node for node, data in self.graph.nodes(data=True) if data["type"] == "prefix"]
+
+        # Check each prefix node to see if it has a path to any output node
+        removed_nodes = []
+        for node in prefix_nodes:
+            # If there is no path from this prefix node to any output node, it's "useless"
+            if not any(nx.has_path(self.graph, node, output_node) for output_node in self.output_nodes):
+                removed_nodes.append(node)
+        
+        for node in removed_nodes:
+            self.graph.remove_node(node)
+        
+        self._reindex_nodes()
+
+    def _reindex_nodes(self):
+        """
+        Reindexes the nodes to ensure continuous indexes after nodes have been removed.
+        """
+        # Generate a mapping from the current node names to new consecutive indices
+        sorted_nodes = sorted(self.graph.nodes(), key=lambda node: int(node.split(" ")[1]))
+
+        node_mapping = {old_node: f"Node {i}" for i, old_node in enumerate(sorted_nodes)}
+        node_id_mapping = {old_node: i for i, old_node in enumerate(self.graph.nodes())}
+        
+        for old_node in node_id_mapping:
+            self.graph.nodes[old_node]['index'] = node_id_mapping[old_node]
+        # Apply the relabeling
+        # nx.relabel_nodes(self.graph, node_mapping,copy=False)
+        # sorted(self.graph)
+        # Update output_nodes with new names
+        # self.output_nodes = [node_mapping[node] for node in self.output_nodes]
+    
+    def get_known_init(self, file_path, num_bits = 0, cell_map = None):
+
+        def update_level_map(cell_map, index_map, level_map):
+            level_map.fill(0)
+            level_map[0, 0] = 1
+
+            for x in range(0,num_bits):
+                index_map[x,x] = x
+
+            for x in range(1,num_bits):
+                level_map[x, x] = 1
+                last_y = x
+                for y in range(x-1, -1, -1):
+                    if cell_map[x, y] == 1:
+                        left_node_index = int(index_map[last_y-1, y])
+                        right_node_index = int(index_map[x,last_y])
+
+
+                        self.add_prefix_node(left_node_index,right_node_index,len(self.graph.nodes))
+
+                        index_map[x,y] = len(self.graph.nodes) - 1
+                        level_map[x, y] = max(level_map[x, last_y], level_map[last_y-1, y])+ 1
+                        last_y = y
+            return level_map, index_map
+        
+        for i in range(num_bits):
+            self.add_input_node(i,(i,i))
+
+        if cell_map is None:
+            fopen = open(file_path, "r")
+            cell_map = np.zeros((num_bits, num_bits))
+            i = 0
+            for line in fopen.readlines():
+                item_list = line.strip().split()
+                # print("item_list", item_list)
+                for j, x in enumerate(item_list):
+                    cell_map[i, j] = int(x)
+                i += 1
+        
+        level_map = np.zeros((num_bits, num_bits))
+        index_map = np.zeros((num_bits, num_bits))
+        level_map,index_map = update_level_map(cell_map, index_map, level_map)
+
+        print("READ level = {}, size = {}".format(level_map.max(), cell_map.sum()))
+
+        print(self.print_circuit_info())
+        print(f"area:{self.compute_num_nodes()}")
+        print(f"delay:{self.compute_overall_delay()}")
+
+
+        
+
+
         
 if __name__ == '__main__':
+
+    def generate_sk_matrix(INPUT_BIT,matrix_path):
+        cell_map = np.zeros((INPUT_BIT, INPUT_BIT))
+        level_map = np.zeros((INPUT_BIT, INPUT_BIT))
+        for i in range(INPUT_BIT):
+            cell_map[i, i] = 1
+            level_map[i, i] = 1
+            t = i
+            now = i
+            x = 1
+            level = 1
+            while t > 0:
+                if t % 2 ==1:
+                    last_now = now
+                    now -= x
+                    cell_map[i, now] = 1
+                    level_map[i, now] = max(level, level_map[last_now-1, now]) +1
+                    level += 1
+                t = t // 2
+                x *= 2
+        np.savetxt(matrix_path, cell_map, fmt='%d')
+
+    # generate_sk_matrix(8,"test_sk_matrix.txt")
+
+    circuit = PrefixCircuit()
+    circuit.get_known_init("adder_16b_5l_49s_0.txt",16)
+    
+    filename = "GPTPrefix16_L8_TrajectoryTrunc_it13.txt"
+    circuits = PrefixCircuit.parse_circuits_from_file(filename)
+    for circuit in circuits:
+        print("Prefix circuit:")
+        print(circuit.print_circuit_info())
+        print("Area:")
+        print(circuit.compute_num_nodes())
+
+        
+    PrefixCircuit.plot_pareto_front(circuits, 'GPTPrefix16')
+
+
     circuit = PrefixCircuit()
     prefix_str = '''
     0: connectedNodes=(None, None), range=[0:0], left_bound=0, right_bound=0.
