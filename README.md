@@ -13,7 +13,7 @@
 2. Config .yml files:
    ```bash
     Openai_API_Key -> your openai api key
-    Model_Name -> selected openai model name (find your preferred model from this page https://platform.openai.com/docs/models)
+    Model_Name -> selected openai model name (find your preferred model from (https://platform.openai.com/docs/models))
     Level -> level limitation of prefix circuit
     BitWidth -> bit width of prefix circuit
     Spcr_It_Bound: the iteration bound of genrating a valid SPCR
