@@ -1,0 +1,6 @@
+Openai_API_Key: ""
+Model_Name: "o1-mini"
+Level: 4
+BitWidth: 8
+Spcr_It_Bound: 20
+Dse_It_Bound: 20

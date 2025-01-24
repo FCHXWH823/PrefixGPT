@@ -5,7 +5,6 @@ import random
 from PrefixCircuit import PrefixCircuit
 import re
 import os
-import yaml
 
 def init_prompt_template_completion(client,model_id,code):
     return client.chat.completions.create(
@@ -293,18 +292,13 @@ def prune_useless_nodes(dir, bit_width, level_limit):
 
 
 if __name__=='__main__':
-    with open("Config.yml") as file:
-        config = yaml.safe_load(file)
-
+    
     client = OpenAI(
-        api_key= config["Openai_API_Key"]
+        api_key=""
     )
-    model = config["Model_Name"]
-    level_limit = config["Level"]
-    bit_width = config["BitWidth"]
-
-    spcr_iteration_bound = config["Spcr_It_Bound"]
-    dse_iteration_bound = config["Dse_It_Bound"]
+    model = "o1-mini"
+    level_limit = 4
+    bit_width = 16
 
     kscircuit = PrefixCircuit()
     kscircuit.build_kogge_stone_circuit(bit_width)
@@ -323,7 +317,7 @@ if __name__=='__main__':
         os.makedirs(f"GPTPrefix{bit_width}_L{level_limit}")
 
     it = max_iteration
-    while (it < dse_iteration_bound):
+    while (it < 20):
         partialcircuit = PrefixCircuit()
         for i in range(bit_width):
             partialcircuit.add_input_node(i,(i,i))
@@ -367,7 +361,7 @@ if __name__=='__main__':
             if not len(partialcircuit.get_missing_ranges()):
                         break
             it_in += 1
-            if it_in > spcr_iteration_bound:
+            if it_in > 20:
                 it_in_limit_flag = 1
                 break
         if not it_in_limit_flag:
