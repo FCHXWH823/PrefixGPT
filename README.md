@@ -36,7 +36,7 @@
    GPTPrefix{`BitWidth`}_L{`Level`}: includes log files of each iteration during design space exploration
 
 6. Example (`BitWidth`=8, `Level`=4):
-<img width="607" alt="image" src="https://github.com/user-attachments/assets/88fcf8e1-3d79-4d3f-ad91-1c047ff99482" />
+    <img width="607" alt="image" src="https://github.com/user-attachments/assets/88fcf8e1-3d79-4d3f-ad91-1c047ff99482" />
 
 
 
