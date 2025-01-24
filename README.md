@@ -10,7 +10,7 @@
     pip install -r requirements.txt
     ```
 
-2. Config .yml files (Config.yml):
+2. Config .yml files (`Config.yml`):
    ```bash
     Openai_API_Key -> your openai api key
     Model_Name -> selected openai model name (find your preferred model from https://platform.openai.com/docs/models)
@@ -32,6 +32,7 @@
     ```bash
     python GeneratePrefixGPT_DepthLimit.py
     ```
+    Note that for each time rerun `GeneratePrefixGPT_DepthLimit.py` without modifying `Config.yml`, you have to delete the corresponding output folder.
 
 5. Results:
    GPTPrefix{`BitWidth`}_L{`Level`}: includes log files of each iteration during design space exploration
