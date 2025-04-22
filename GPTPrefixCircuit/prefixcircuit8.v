@@ -27,34 +27,35 @@ module prefixcircuit8(output [7:0] sum, output cout, input [7:0] a, b);
   wire [7:0] g, p;
   Square sq[7:0](g, p, a, b);
 
-  wire [15:8] g1, p1;
-  BigCircle bc1_8(g1[8], p1[8], g[1], p[1], g[0], p[0]);
-  BigCircle bc1_11(g1[11], p1[11], g[5], p[5], g[4], p[4]);
-  BigCircle bc1_13(g1[13], p1[13], g[7], p[7], g[6], p[6]);
-  BigCircle bc1_15(g1[15], p1[15], g[4], p[4], g[3], p[3]);
+  wire [10:8] g2, p2;
+  BigCircle bc2_8(g2[8], p2[8], g[1], p[1], g[0], p[0]);
+  BigCircle bc2_9(g2[9], p2[9], g[5], p[5], g[4], p[4]);
+  BigCircle bc2_10(g2[10], p2[10], g[7], p[7], g[6], p[6]);
 
-  wire [9:9] g2, p2;
-  BigCircle bc2_9(g2[9], p2[9], g[2], p[2], g1[8], p1[8]);
+  wire [13:13] g3, p3;
+  BigCircle bc3_13(g3[13], p3[13], g[2], p[2], g2[8], p2[8]);
 
-  wire [16:10] g3, p3;
-  BigCircle bc3_10(g3[10], p3[10], g[3], p[3], g2[9], p2[9]);
-  BigCircle bc3_16(g3[16], p3[16], g1[15], p1[15], g2[9], p2[9]);
+  wire [11:11] g4, p4;
+  BigCircle bc4_11(g4[11], p4[11], g[3], p[3], g3[13], p3[13]);
 
-  wire [12:12] g4, p4;
-  BigCircle bc4_12(g4[12], p4[12], g1[11], p1[11], g3[10], p3[10]);
+  wire [14:14] g5, p5;
+  BigCircle bc5_14(g5[14], p5[14], g[4], p[4], g4[11], p4[11]);
 
-  wire [17:14] g5, p5;
-  BigCircle bc5_14(g5[14], p5[14], g1[13], p1[13], g4[12], p4[12]);
-  BigCircle bc5_17(g5[17], p5[17], g[6], p[6], g4[12], p4[12]);
+  wire [15:15] g6, p6;
+  BigCircle bc6_15(g6[15], p6[15], g[5], p[5], g5[14], p5[14]);
+
+  wire [16:12] g7, p7;
+  BigCircle bc7_16(g7[16], p7[16], g[6], p[6], g6[15], p6[15]);
+  BigCircle bc7_12(g7[12], p7[12], g2[10], p2[10], g6[15], p6[15]);
 
   SmallCircle sc0(c[0], g[0]);
-  SmallCircle sc1(c[1], g1[8]);
-  SmallCircle sc2(c[2], g2[9]);
-  SmallCircle sc3(c[3], g3[10]);
-  SmallCircle sc4(c[4], g3[16]);
-  SmallCircle sc5(c[5], g4[12]);
-  SmallCircle sc6(c[6], g5[17]);
-  SmallCircle sc7(c[7], g5[14]);
+  SmallCircle sc1(c[1], g2[8]);
+  SmallCircle sc2(c[2], g3[13]);
+  SmallCircle sc3(c[3], g4[11]);
+  SmallCircle sc4(c[4], g5[14]);
+  SmallCircle sc5(c[5], g6[15]);
+  SmallCircle sc6(c[6], g7[16]);
+  SmallCircle sc7(c[7], g7[12]);
   Triangle tr0(sum[0], p[0], cin);
   Triangle tr1(sum[1], p[1], c[0]);
   Triangle tr2(sum[2], p[2], c[1]);

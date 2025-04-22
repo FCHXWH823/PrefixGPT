@@ -78,7 +78,7 @@ class PrefixCircuit:
         Parameters:
             index (int): Unique identifier of the prefix node to remove.
         """
-        node_name = f"Node {index}"
+        node_name = index
         if node_name in self.graph:
             # Remove the node and its associated edges
             self.graph.remove_node(node_name)
@@ -324,8 +324,70 @@ class PrefixCircuit:
                     self.graph.add_edge(f"Node {right_node}", node_name)
 
             # Check if this node should be an output node
-            if bit_range[0] == 0 and connected_nodes != (None, None):
-                self.output_nodes.append(node_name)
+            # if bit_range[0] == 0 and connected_nodes != (None, None):
+            #     self.output_nodes.append(node_name)
+    
+    def construct_circuit_from_info_string(self, info_string):
+        """
+        Constructs the circuit from a string containing node information in the format:
+        'index: connectedNodes=(i,j), range=[k:l], left_bound=xxx, right_bound=xxx, level=xxx.'
+        The nodes may not be provided in topological order.
+        """
+        import re
+        from collections import defaultdict
+
+        self.graph.clear()
+        self.output_nodes = []
+
+        lines = info_string.strip().split('\n')
+        node_specs = {}
+
+        for line in lines:
+            line = line.strip().rstrip('.')
+            if not line:
+                continue
+
+            match = re.match(
+                r"(\d+): connectedNodes=\((\d+|None), (\d+|None)\), range=\[(\d+):(\d+)\], .*level=(\d+)",
+                line
+            )
+            if not match:
+                raise ValueError(f"Invalid format in line: {line}")
+
+            index = int(match.group(1))
+            left = None if match.group(2) == 'None' else int(match.group(2))
+            right = None if match.group(3) == 'None' else int(match.group(3))
+            bit_range = (int(match.group(4)), int(match.group(5)))
+            level = int(match.group(6))
+
+            node_specs[index] = {
+                'left': left,
+                'right': right,
+                'range': bit_range,
+                'level': level
+            }
+
+        pending = dict(node_specs)
+        while pending:
+            progress = False
+            for index in list(pending.keys()):
+                spec = pending[index]
+                left = spec['left']
+                right = spec['right']
+                bit_range = spec['range']
+
+                if left is None and right is None:
+                    self.add_input_node(index, bit_range)
+                    del pending[index]
+                    progress = True
+                elif f"Node {left}" in self.graph and f"Node {right}" in self.graph:
+                    self.add_prefix_node(left, right, index)
+                    del pending[index]
+                    progress = True
+
+            if not progress:
+                raise ValueError("Cyclic or missing dependency in input node definitions.")
+
        
     def compute_overall_delay(self):
         """
@@ -817,7 +879,7 @@ endmodule
         for old_node in node_id_mapping:
             self.graph.nodes[old_node]['index'] = node_id_mapping[old_node]
         # Apply the relabeling
-        # nx.relabel_nodes(self.graph, node_mapping,copy=False)
+        # self.graph = nx.relabel_nodes(self.graph, node_mapping,copy=False)
         # sorted(self.graph)
         # Update output_nodes with new names
         # self.output_nodes = [node_mapping[node] for node in self.output_nodes]
@@ -871,8 +933,280 @@ endmodule
         print(f"area:{self.compute_num_nodes()}")
         print(f"delay:{self.compute_overall_delay()}")
 
+    def get_candidate_prefix_pairs(self):
+        """
+        Returns all valid pairs of existing nodes that can be connected
+        by a new prefix node. A valid pair is one where the bit ranges
+        of the two nodes are adjacent and ordered properly.
 
-        
+        Returns:
+            List of tuples: Each tuple contains (left_node_index, right_node_index)
+                            representing the indices of the two nodes that can be
+                            connected by a prefix node.
+        """
+        candidates = []
+        node_data = {
+            data["index"]: (node, data["range"])
+            for node, data in self.graph.nodes(data=True)
+        }
+
+        # Sort nodes by range for deterministic iteration
+        sorted_items = sorted(node_data.items(), key=lambda x: x[1][1][0])  # sort by range start
+
+        for i in range(len(sorted_items)):
+            for j in range(len(sorted_items)):
+                if i == j:
+                    continue
+                idx1, (name1, range1) = sorted_items[i]
+                idx2, (name2, range2) = sorted_items[j]
+
+                # Check if ranges are adjacent and ordered
+                if range1[1] + 1 == range2[0]:
+                    candidates.append((idx1, idx2))
+
+        return candidates
+
+    def get_pruned_candidate_prefix_pairs(self, depth_bound):
+        """
+        Returns all valid pairs of existing nodes that can be connected
+        by a new prefix node. A valid pair is one where the bit ranges
+        of the two nodes are adjacent and ordered properly.
+
+        Returns:
+            List of tuples: Each tuple contains (left_node_index, right_node_index)
+                            representing the indices of the two nodes that can be
+                            connected by a prefix node.
+        """
+        candidates = []
+        node_data = {
+            data["index"]: (node, data["range"])
+            for node, data in self.graph.nodes(data=True)
+        }
+        levels = self.get_node_levels()
+        # Sort nodes by range for deterministic iteration
+        sorted_items = sorted(node_data.items(), key=lambda x: x[1][1][0])  # sort by range start
+
+        for i in range(len(sorted_items)):
+            for j in range(len(sorted_items)):
+                if i == j:
+                    continue
+                idx1, (name1, range1) = sorted_items[i]
+                idx2, (name2, range2) = sorted_items[j]
+                level1 = levels[name1]
+                level2 = levels[name2]
+
+                if max(level1, level2) + 1 > depth_bound:
+                    continue
+
+
+                # Check if ranges are adjacent and ordered
+                if range1[1] + 1 == range2[0]:
+                    candidates.append((idx1, idx2))
+
+        return candidates
+
+    def get_pruned_candidate_prefix_pairs(self, depth_bound):
+        """
+        Returns all valid pairs of existing nodes that can be connected
+        by a new prefix node. A valid pair is one where the bit ranges
+        of the two nodes are adjacent and ordered properly, and where
+        the merged range does not already exist in the current circuit.
+
+        Returns:
+            List of tuples: Each tuple contains (left_node_index, right_node_index)
+                            representing the indices of the two nodes that can be
+                            connected by a prefix node.
+        """
+        candidates = []
+        node_data = {
+            data["index"]: (node, data["range"])
+            for node, data in self.graph.nodes(data=True)
+        }
+        existing_ranges = {data["range"] for _, data in self.graph.nodes(data=True)}
+        levels = self.get_node_levels()
+        sorted_items = sorted(node_data.items(), key=lambda x: x[1][1][0])
+        missing_ranges = self.get_missing_ranges()
+        # if len(missing_ranges) > 8:
+        #     missing_ranges = missing_ranges[:8]
+
+        for i in range(len(sorted_items)):
+            for j in range(len(sorted_items)):
+                if i == j:
+                    continue
+                idx1, (name1, range1) = sorted_items[i]
+                idx2, (name2, range2) = sorted_items[j]
+                level1 = levels[name1]
+                level2 = levels[name2]
+                if range1[0] == 0:
+                    db = depth_bound
+                else:
+                    db = depth_bound - 1
+                if max(level1, level2) + 1 > db:
+                    continue
+
+                if range1[1] + 1 == range2[0]:
+                    merged_range = (range1[0], range2[1])
+                    if merged_range not in existing_ranges and any(merged_range[0] >= miss[0] and merged_range[1] <= miss[1] for miss in missing_ranges):
+                        candidates.append((idx1, idx2))
+
+        return candidates
+
+    def optimize_fanout_singletons(self, level_bound):
+        """
+        Removes prefix nodes with only one fanout if that fanout node can instead be
+        connected to another valid pair of adjacent prefix nodes (with a different pair)
+        that together compute the same range, and the resulting circuit does not exceed
+        the level bound.
+        """
+        range_to_node = {
+            data['range']: node for node, data in self.graph.nodes(data=True)
+            if data['type'] in {'input', 'prefix'}
+        }
+        to_remove = []
+
+        for node, data in list(self.graph.nodes(data=True)):
+            if data['type'] != 'prefix':
+                continue
+
+            successors = list(self.graph.successors(node))
+            if len(successors) != 1 or node in self.output_nodes:
+                continue
+
+            fanout = successors[0]
+            fanout_data = self.graph.nodes[fanout]
+            fanout_range = fanout_data['range']
+            i, j = fanout_range
+
+            # Get current input pair to fanout
+            current_inputs = list(self.graph.predecessors(fanout))
+            if len(current_inputs) != 2 or node not in current_inputs:
+                continue
+
+            other_input = current_inputs[0] if current_inputs[1] == node else current_inputs[1]
+            current_pair_ranges = {
+                self.graph.nodes[node]['range'],
+                self.graph.nodes[other_input]['range']
+            }
+
+            # Try alternate adjacent range pairs
+            for k in range(i, j):
+                left_range = (i, k)
+                right_range = (k+1, j)
+                if left_range in range_to_node and right_range in range_to_node:
+                    if {left_range, right_range} == current_pair_ranges:
+                        continue  # Skip same pair
+
+                    n1 = range_to_node[left_range]
+                    n2 = range_to_node[right_range]
+
+                    # Temporarily add edges to fanout
+                    self.graph.add_edge(n1, fanout)
+                    self.graph.add_edge(n2, fanout)
+
+                    levels = self.get_node_levels()
+                    if all(levels[n] <= level_bound for n in self.graph.nodes):
+                        # Safe to remove original node and edges
+                        if self.graph.has_edge(node, fanout):
+                            self.graph.remove_edge(node, fanout)
+                        if self.graph.has_edge(other_input, fanout):
+                            self.graph.remove_edge(other_input, fanout)
+                        # for p in list(self.graph.predecessors(node)):
+                        #     self.graph.remove_edge(p, node)
+                        # self.graph.remove_node(node)
+                        fanout_level = max(levels[n1], levels[n2]) + 1
+                        self.graph.nodes[fanout]['level'] = fanout_level
+
+                        range_to_node.pop(self.graph.nodes[node]['range'],None) 
+                        to_remove.append(node)
+                        break  # Proceed to next node
+                    else:
+                        # Undo the added edges
+                        self.graph.remove_edge(n1, fanout)
+                        self.graph.remove_edge(n2, fanout)
+        for node in to_remove:
+            # self.graph.remove_node(node)
+            self.remove_prefix_node(node)
+            # for p in list(self.graph.predecessors(node)):
+            #     self.graph.remove_edge(p, node)
+            # self.graph.remove_node(node)
+        self._reindex_nodes()
+        return to_remove
+    
+    def prune_duplicate_ranges(self):
+        """
+        Removes redundant prefix nodes that compute the same range.
+        Retains the node with the smallest level and reconnects all fanouts of the removed nodes to the retained node.
+        """
+        from collections import defaultdict
+
+        levels = self.get_node_levels()
+        range_to_nodes = defaultdict(list)
+
+        for node, data in self.graph.nodes(data=True):
+            if data['type'] != 'prefix':
+                continue
+            range_to_nodes[data['range']].append(node)
+
+        for bit_range, nodes in range_to_nodes.items():
+            if len(nodes) <= 1:
+                continue
+
+            # Find node with the smallest level
+            min_node = min(nodes, key=lambda n: levels[n])
+
+            for node in nodes:
+                if node == min_node:
+                    continue
+                # Reconnect fanouts to the retained node
+                fanouts = list(self.graph.successors(node))
+                for fanout in fanouts:
+                    self.graph.add_edge(min_node, fanout)
+
+                # Remove the redundant node
+                node_index = self.graph.nodes[node]['index']
+                self.remove_prefix_node(node)
+
+        self._reindex_nodes()
+    
+    def add_nodes_for_missing_ranges(self, level_bound):
+        """
+        For each missing range, finds the best pair of existing nodes (with minimal level)
+        that can be combined into a new prefix node to compute the range, and adds it.
+        """
+        pairs = self.get_pruned_candidate_prefix_pairs(level_bound)
+        levels = self.get_node_levels()
+        missing_ranges = self.get_missing_ranges()
+        max_index = max(self.graph.nodes[n]['index'] for n in self.graph.nodes) + 1
+
+        added = 0
+        for target_range in missing_ranges:
+            best_pair = None
+            best_level = float('inf')
+
+            for left_idx, right_idx in pairs:
+                left_name = f"Node {left_idx}"
+                right_name = f"Node {right_idx}"
+
+                if left_name not in self.graph or right_name not in self.graph:
+                    continue
+
+                left_range = self.graph.nodes[left_name]['range']
+                right_range = self.graph.nodes[right_name]['range']
+                combined_range = (left_range[0], right_range[1])
+
+                if combined_range != target_range:
+                    continue
+
+                new_level = max(levels[left_name], levels[right_name]) + 1
+                if new_level <= level_bound and new_level < best_level:
+                    best_level = new_level
+                    best_pair = (left_idx, right_idx)
+
+            if best_pair:
+                self.add_prefix_node(best_pair[0], best_pair[1], max_index)
+                max_index += 1
+                added += 1
+
 
 
         
@@ -899,104 +1233,123 @@ if __name__ == '__main__':
                 x *= 2
         np.savetxt(matrix_path, cell_map, fmt='%d')
 
-    # generate_sk_matrix(8,"test_sk_matrix.txt")
+    generate_sk_matrix(32,"test_sk_matrix.txt")
 
     circuit = PrefixCircuit()
-    circuit.get_known_init("adder_16b_5l_49s_0.txt",16)
+    circuit.get_known_init("test_sk_matrix.txt",32)
+    circuit.print_circuit_info()
+    # candidates = circuit.get_candidate_prefix_pairs()
+    # for left, right in candidates:
+    #     print(f"Valid pair: Node {left} -> Node {right}")
+
     
-    filename = "GPTPrefix16_L8_TrajectoryTrunc_it13.txt"
-    circuits = PrefixCircuit.parse_circuits_from_file(filename)
-    for circuit in circuits:
-        print("Prefix circuit:")
-        print(circuit.print_circuit_info())
-        print("Area:")
-        print(circuit.compute_num_nodes())
+    # filename = "GPTPrefix8_L4_deepseek-chat_Pruned_TrajectoryTrunc_it0.txt"
+    # circuits = PrefixCircuit.parse_circuits_from_file(filename)
+    
+    # for circuit in circuits:
+    #     print("Prefix circuit:")
+    #     print(circuit.print_circuit_info())
+    #     print("Area:")
+    #     print(circuit.compute_num_nodes())
+    
+    # pc = circuits[0]
+    # num_nodes = pc.compute_num_nodes()
+    # next_num_nodes = 0
+    # while next_num_nodes < num_nodes:
+    #     num_nodes = pc.compute_num_nodes()
+    #     optimized_pc_nodes = pc.optimize_fanout_singletons(4)
+    #     print("Optimized nodes:", optimized_pc_nodes)
+    #     print("Prefix circuit:")
+    #     print(pc.print_circuit_info())
+    #     next_num_nodes = pc.compute_num_nodes()
+        
+    
 
         
-    PrefixCircuit.plot_pareto_front(circuits, 'GPTPrefix16')
+    # PrefixCircuit.plot_pareto_front(circuits, 'GPTPrefix16')
 
 
-    circuit = PrefixCircuit()
-    prefix_str = '''
-    0: connectedNodes=(None, None), range=[0:0], left_bound=0, right_bound=0.
-    1: connectedNodes=(None, None), range=[1:1], left_bound=1, right_bound=1.
-    2: connectedNodes=(None, None), range=[2:2], left_bound=2, right_bound=2.
-    3: connectedNodes=(None, None), range=[3:3], left_bound=3, right_bound=3.
-    4: connectedNodes=(None, None), range=[4:4], left_bound=4, right_bound=4.
-    5: connectedNodes=(None, None), range=[5:5], left_bound=5, right_bound=5.
-    6: connectedNodes=(None, None), range=[6:6], left_bound=6, right_bound=6.
-    7: connectedNodes=(None, None), range=[7:7], left_bound=7, right_bound=7.
-    8: connectedNodes=(0, 1), range=[0:1], left_bound=0, right_bound=1.
-    9: connectedNodes=(8, 2), range=[0:2], left_bound=0, right_bound=2.
-    10: connectedNodes=(9, 3), range=[0:3], left_bound=0, right_bound=3.
-    11: connectedNodes=(4, 5), range=[4:5], left_bound=4, right_bound=5.
-    12: connectedNodes=(10, 11), range=[0:5], left_bound=0, right_bound=5.
-    13: connectedNodes=(6, 7), range=[6:7], left_bound=6, right_bound=7.
-    14: connectedNodes=(12, 13), range=[0:7], left_bound=0, right_bound=7.
-    15: connectedNodes=(3, 4), range=[3:4], left_bound=3, right_bound=4.
-    16: connectedNodes=(9, 15), range=[0:4], left_bound=0, right_bound=4.
-    17: connectedNodes=(12, 6), range=[0:6], left_bound=0, right_bound=6.
-    '''
-    circuit.construct_circuit_from_info_string(prefix_str)
-    print(f"area:{circuit.compute_num_nodes()}, delay:{circuit.compute_overall_delay()}")
-    circuit.generate_verilog('./GPTPrefixCircuit/prefixcircuit8.v')
+    # circuit = PrefixCircuit()
+    # prefix_str = '''
+    # 0: connectedNodes=(None, None), range=[0:0], left_bound=0, right_bound=0, level=1.
+    # 1: connectedNodes=(None, None), range=[1:1], left_bound=1, right_bound=1, level=1.
+    # 2: connectedNodes=(None, None), range=[2:2], left_bound=2, right_bound=2, level=1.
+    # 3: connectedNodes=(None, None), range=[3:3], left_bound=3, right_bound=3, level=1.
+    # 4: connectedNodes=(None, None), range=[4:4], left_bound=4, right_bound=4, level=1.
+    # 5: connectedNodes=(None, None), range=[5:5], left_bound=5, right_bound=5, level=1.
+    # 6: connectedNodes=(None, None), range=[6:6], left_bound=6, right_bound=6, level=1.
+    # 7: connectedNodes=(None, None), range=[7:7], left_bound=7, right_bound=7, level=1.
+    # 8: connectedNodes=(0, 1), range=[0:1], left_bound=0, right_bound=1, level=2.
+    # 9: connectedNodes=(4, 5), range=[4:5], left_bound=4, right_bound=5, level=2.
+    # 10: connectedNodes=(6, 7), range=[6:7], left_bound=6, right_bound=7, level=2.
+    # 11: connectedNodes=(13, 3), range=[0:3], left_bound=0, right_bound=3, level=3.
+    # 12: connectedNodes=(15, 10), range=[0:7], left_bound=0, right_bound=7, level=4.
+    # 13: connectedNodes=(8, 2), range=[0:2], left_bound=0, right_bound=2, level=3.
+    # 14: connectedNodes=(11, 4), range=[0:4], left_bound=0, right_bound=4, level=4.
+    # 15: connectedNodes=(14, 5), range=[0:5], left_bound=0, right_bound=5, level=5.
+    # 16: connectedNodes=(15, 6), range=[0:6], left_bound=0, right_bound=6, level=6.
+    # '''
+    # circuit.construct_circuit_from_info_string(prefix_str)
+    # print(f"area:{circuit.compute_num_nodes()}, delay:{circuit.compute_overall_delay()}")
+    # circuit.generate_verilog('./GPTPrefixCircuit/prefixcircuit8.v')
 
     
-    # circuit.build_ripple_carry_circuit(8)
-    # info = circuit.print_circuit_info()
-    # print(info)
+    # # circuit.build_ripple_carry_circuit(8)
+    # # info = circuit.print_circuit_info()
+    # # print(info)
 
-    # circuit.visualize()
-
+    # # circuit.visualize()
+    # skcircuit = PrefixCircuit()
+    
     kscircuit = PrefixCircuit()
-    kscircuit.build_kogge_stone_circuit(8)
+    kscircuit.build_kogge_stone_circuit(32)
     print(f"area:{kscircuit.compute_num_nodes()}, delay:{kscircuit.compute_overall_delay()}")
 
-    rcacircuit = PrefixCircuit()
-    rcacircuit.build_ripple_carry_circuit(8)
-    print(f"area:{rcacircuit.compute_num_nodes()}, delay:{rcacircuit.compute_overall_delay()}")
+    # rcacircuit = PrefixCircuit()
+    # rcacircuit.build_ripple_carry_circuit(8)
+    # print(f"area:{rcacircuit.compute_num_nodes()}, delay:{rcacircuit.compute_overall_delay()}")
     
-    circuits = [circuit,kscircuit,rcacircuit]
-    results = PrefixCircuit.non_dominated_sort(circuits)
-    print(results)
-    # kscircuit.visualize()
-    # print(kscircuit.generate_verilog("KSA8.v"))
+    # circuits = [circuit,kscircuit,rcacircuit]
+    # results = PrefixCircuit.non_dominated_sort(circuits)
+    # print(results)
+    # # kscircuit.visualize()
+    # # print(kscircuit.generate_verilog("KSA8.v"))
     
-    # # Add input nodes
-    # for i in range(8):
-    #     circuit.add_input_node(index=i, bit_range=(i, i))
+    # # # Add input nodes
+    # # for i in range(8):
+    # #     circuit.add_input_node(index=i, bit_range=(i, i))
 
-    # # Step 1: Combine Node 0 and Node 1 into Node 8 (Range: [0:1])
-    # circuit.add_prefix_node(left_node_index=0, right_node_index=1, index=8)
+    # # # Step 1: Combine Node 0 and Node 1 into Node 8 (Range: [0:1])
+    # # circuit.add_prefix_node(left_node_index=0, right_node_index=1, index=8)
 
-    # # Step 2: Combine Node 2 and Node 3 into Node 9 (Range: [2:3])
-    # circuit.add_prefix_node(left_node_index=2, right_node_index=3, index=9)
+    # # # Step 2: Combine Node 2 and Node 3 into Node 9 (Range: [2:3])
+    # # circuit.add_prefix_node(left_node_index=2, right_node_index=3, index=9)
 
-    # # Step 3: Combine Node 8 and Node 9 into Node 10 (Range: [0:3])
-    # circuit.add_prefix_node(left_node_index=8, right_node_index=9, index=10)
+    # # # Step 3: Combine Node 8 and Node 9 into Node 10 (Range: [0:3])
+    # # circuit.add_prefix_node(left_node_index=8, right_node_index=9, index=10)
 
-    # # Step 4: Combine Node 4 and Node 5 into Node 11 (Range: [4:5])
-    # circuit.add_prefix_node(left_node_index=4, right_node_index=5, index=11)
+    # # # Step 4: Combine Node 4 and Node 5 into Node 11 (Range: [4:5])
+    # # circuit.add_prefix_node(left_node_index=4, right_node_index=5, index=11)
 
-    # # Step 5: Combine Node 6 and Node 7 into Node 12 (Range: [6:7])
-    # circuit.add_prefix_node(left_node_index=6, right_node_index=7, index=12)
+    # # # Step 5: Combine Node 6 and Node 7 into Node 12 (Range: [6:7])
+    # # circuit.add_prefix_node(left_node_index=6, right_node_index=7, index=12)
 
-    # # Step 6: Combine Node 11 and Node 12 into Node 13 (Range: [4:7])
-    # circuit.add_prefix_node(left_node_index=11, right_node_index=12, index=13)
+    # # # Step 6: Combine Node 11 and Node 12 into Node 13 (Range: [4:7])
+    # # circuit.add_prefix_node(left_node_index=11, right_node_index=12, index=13)
 
-    # # Step 7: Combine Node 10 and Node 13 into Node 14 (Range: [0:7])
-    # circuit.add_prefix_node(left_node_index=10, right_node_index=13, index=14)
+    # # # Step 7: Combine Node 10 and Node 13 into Node 14 (Range: [0:7])
+    # # circuit.add_prefix_node(left_node_index=10, right_node_index=13, index=14)
 
-    # # Step 8: Combine Node [0:2]
-    # circuit.add_prefix_node(left_node_index=8,right_node_index=2, index=15)
+    # # # Step 8: Combine Node [0:2]
+    # # circuit.add_prefix_node(left_node_index=8,right_node_index=2, index=15)
 
-    # # Step 9: Range: [0:4]
-    # circuit.add_prefix_node(left_node_index=10,right_node_index=4,index=16)
+    # # # Step 9: Range: [0:4]
+    # # circuit.add_prefix_node(left_node_index=10,right_node_index=4,index=16)
 
-    # # Step 10: Range: [0:5]
-    # circuit.add_prefix_node(left_node_index=10,right_node_index=11,index=17)
+    # # # Step 10: Range: [0:5]
+    # # circuit.add_prefix_node(left_node_index=10,right_node_index=11,index=17)
 
-    # # Step 11: Range: [0:6]
-    # circuit.add_prefix_node(left_node_index=17, right_node_index=6, index=18)
-    # # Visualize the circuit
-    # circuit.visualize()
+    # # # Step 11: Range: [0:6]
+    # # circuit.add_prefix_node(left_node_index=17, right_node_index=6, index=18)
+    # # # Visualize the circuit
+    # # circuit.visualize()

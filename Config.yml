@@ -1,6 +1,9 @@
 Openai_API_Key: ""
-Model_Name: "o1-mini"
-Level: 4
-BitWidth: 8
-Spcr_It_Bound: 20
+DeepSeek_API_Key: ""
+# Model_Name: "gpt-4o"
+Model_Name: "deepseek-chat"
+Level: 8
+BitWidth: 32
+Spcr_It_Bound: 100
 Dse_It_Bound: 20
+USE_HUMAN_HEURISTIC: 0
