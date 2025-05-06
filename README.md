@@ -1,5 +1,15 @@
 # PrefixLLM: LLM-aided Prefix Circuit Design
 
+## Abstract
+Prefix circuits are fundamental components in digital adders, widely used in digital systems due to their efficiency in calculating carry signals. Synthesizing prefix circuits with
+minimized area and delay is crucial for enhancing the performance of modern computing systems. Recently, large language models (LLMs) have demonstrated a surprising ability to perform
+text generation tasks. We propose PrefixLLM, that leverages LLMs for prefix circuit synthesis. PrefixLLM transforms the prefix circuit synthesis task into a structured text generation problem, termed the Structured Prefix Circuit Representation (SPCR), and introduces an iterative framework to automatically and accurately generate valid SPCRs. Furthermore, we present
+a design space exploration (DSE) framework that uses LLMs to iteratively search for area and delay optimized prefix circuits. To further improve synthesis quality, we develop two enhancement techniques: simplification of prompt for SPCR generation, and a structural optimization heuristic. With these enhancements, PrefixLLM enables a general, non-reasoning LLM to achieve the same or even better performance as a powerful reasoning LLM, significantly reducing the deployment cost.
+
+<img width="558" alt="image" src="https://github.com/user-attachments/assets/a6c82f0d-cfc5-425c-a7af-e36d45798e38" />
+
+
+## Usage
 1. Download all required packages:
 
     Download this lib in python
