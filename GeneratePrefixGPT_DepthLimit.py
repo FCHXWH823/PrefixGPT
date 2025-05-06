@@ -432,7 +432,7 @@ if __name__=='__main__':
             api_key= config["DeepSeek_API_Key"],
             base_url="https://api.deepseek.com",
         )
-    level_limit = 10
+    level_limit = config["Level"]
     bit_width = config["BitWidth"]
 
     spcr_iteration_bound = config["Spcr_It_Bound"]

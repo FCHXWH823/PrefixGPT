@@ -9,16 +9,18 @@
 
 2. Config .yml files (`Config.yml`):
 
-    Note that for the model name, we recommend to select: o1 and o1-mini, which can derive the results using fewer iteration. If selecting other models such as gpt 4o, you may have to increase `Spcr_It_Bound` and `Dse_It_Bound`.
+    (i) For the first version of our PrefixLLM (`USE_HUMAN_HEURISTIC`=0), only powerful reasoning LLMs can generate efficient prefix circuits, e.g., o1 and o1-mini. If selecting other general models such as gpt 4o, you may have to increase `Spcr_It_Bound` and `Dse_It_Bound`.
+    (ii) For the current version of our PrefixLLM (`USE_HUMAN_HEURISTIC`=1), it supports general chatting LLMs to generate great prefix circuits, e.g., deepseek-V3.
     ```bash
     Openai_API_Key -> your openai api key
-    Model_Name -> selected openai model name (find your preferred model from https://platform.openai.com/docs/models)
+    DeepSeek_API_Key-> your deepseek api key
+    Model_Name -> selected openai model name (find your preferred model from OpenAI (https://platform.openai.com/docs/models), DeepSeek (https://www.deepseek.com/), ...)
     Level -> level limitation of prefix circuit
     BitWidth -> bit width of prefix circuit
     Spcr_It_Bound: the iteration bound of genrating a valid SPCR
     Dse_It_Bound: the iteration bound of our design exploration framework
+    USE_HUMAN_HEURISTIC: if set as 1, use our proposed enhanced techniques; else, our initial version of PrefixLLM 
     ```
-    Note that for the model name, we recommend to select: o1 and o1-mini, which can derive the results using fewer iteration. If selecting other models such as gpt 4o, you may have to increase `Spcr_It_Bound` and `Dse_It_Bound`.
 
 3. Src files:
 
@@ -39,9 +41,11 @@
 
    GPTPrefix{`BitWidth`}_L{`Level`}: includes log files of each iteration during design space exploration
 
-6. Example (`BitWidth`=8, `Level`=4):
+6. Example 1 (`BitWidth`=8, `Level`=4):
 
     <img width="607" alt="image" src="https://github.com/user-attachments/assets/88fcf8e1-3d79-4d3f-ad91-1c047ff99482" />
+
+Example 2 (`BitWidth`=16, `Level`=8):
 
 
 
