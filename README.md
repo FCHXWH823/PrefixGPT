@@ -46,7 +46,10 @@
 
     <img width="607" alt="image" src="https://github.com/user-attachments/assets/88fcf8e1-3d79-4d3f-ad91-1c047ff99482" />
 
-Example 2 (`BitWidth`=16, `Level`=8):
+   Example 2 (`BitWidth`=16, `Level`=8):
+
+   <img width="637" alt="image" src="https://github.com/user-attachments/assets/0270aa50-c35d-429b-9856-a7d17d769fc7" />
+
 
 
 
