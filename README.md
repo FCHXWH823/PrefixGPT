@@ -10,6 +10,7 @@
 2. Config .yml files (`Config.yml`):
 
     (i) For the first version of our PrefixLLM (`USE_HUMAN_HEURISTIC`=0), only powerful reasoning LLMs can generate efficient prefix circuits, e.g., o1 and o1-mini. If selecting other general models such as gpt 4o, you may have to increase `Spcr_It_Bound` and `Dse_It_Bound`.
+    
     (ii) For the current version of our PrefixLLM (`USE_HUMAN_HEURISTIC`=1), it supports general chatting LLMs to generate great prefix circuits, e.g., deepseek-V3.
     ```bash
     Openai_API_Key -> your openai api key
